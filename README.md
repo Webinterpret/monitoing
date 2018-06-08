@@ -1,7 +1,7 @@
-docker-grafana-influxdb
+monitoring
 =======================
 
-This image contains a sensible default configuration of InfluxDB and Grafana. It explicitly doesn't bundle an example dashboard.
+This image contains a sensible default configuration of InfluxDB, Chronograf and Grafana. It explicitly doesn't bundle an example dashboard.
 
 ### Using the Dashboard ###
 
@@ -17,7 +17,7 @@ The repo also has `build`, `start` and `stop` scripts to make your workflow more
 The container exposes the following ports by default:
 
 - `80`: Grafana web interface.
-- `8083`: InfluxDB Admin web interface.
+- `8888`: Chronograf web interface.
 - `8084`: InfluxDB HTTPS API (not usable by default).
 - `8086`: InfluxDB HTTP API.
 
@@ -26,14 +26,14 @@ To start a container with your custom config: see `start` script.
 To change ports, consider the following:
 
 - `80`: edit `Dockerfile, ngingx/nginx.conf and start script`.
-- `8083`: edit: `Dockerfile, influxDB/config.toml and start script`.
+- `8888`: edit: `Dockerfile`.
 - `8084`: edit: to be announced.
 - `8086`: edit: `Dockerfile, influxDB/config.toml, grafana/config.ini, set_influxdb.sh and start script`.
 
-### Running container under boot2docker on Mac OS X ###
-Currently, there is an issue with boot2docker dicussed [here](https://github.com/kamon-io/docker-grafana-graphite/issues/5). To bypass this, change the last line in start script to the following to start the container:
+### Running container ###
+To run container simply type:
 ```bash
-docker run -d -p 80:80 -p 8083:8083 -p 8084:8084 -p 8086:8086 --name grafana-influxdb_con grafana_influxdb
+docker run -d -p 80:80 -p 8888:8888 -p 8084:8084 -p 8086:8086 --name monitoring wisas/monitoring
 ```
 
 InfluxDB is configured by default with two databases. `grafana` DB for storing your Dashboard and `data` DB for storing your measurements. You can edit all default passwords in `Dockerfile`. If you wanna edit DB names, users and passwords, have a look at the following files: `grafana/config.ini, set_grafana.sh, set_influxdb.sh and Dockerfile`
